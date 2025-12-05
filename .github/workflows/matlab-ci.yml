@@ -1,0 +1,57 @@
+name: MATLAB Continuous Integration
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+
+jobs:
+  matlab-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------
+      # Checkout repository
+      # -----------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -----------------------------
+      # Install MATLAB (via MathWorks-hosted runner)
+      # Requires your GitHub account to be linked to a MATLAB license
+      # -----------------------------
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
+
+      # -----------------------------
+      # Basic syntax check for all .m files
+      # (Ensures there are no typing errors)
+      # -----------------------------
+      - name: Check MATLAB code for syntax errors
+        uses: matlab-actions/run-command@v1
+        with:
+          command: |
+            fprintf('Running syntax checks...\n');
+            files = dir('*.m');
+            for k = 1:numel(files)
+                fprintf('Checking %s...\n', files(k).name);
+                checkcode(files(k).name, '-cyc', '-m3');
+            end
+
+      # -----------------------------
+      # Run your main demo script if it exists
+      # (Optional but recommended)
+      # -----------------------------
+      - name: Run demo / main script
+        uses: matlab-actions/run-command@v1
+        with:
+          command: |
+            if exist('main.m','file')
+               fprintf('Running main.m ...\n');
+               main;
+            elseif exist('demo.m','file')
+               fprintf('Running demo.m ...\n');
+               demo;
+            else
+               fprintf('No main.m or demo.m to run.\n');
+            end
