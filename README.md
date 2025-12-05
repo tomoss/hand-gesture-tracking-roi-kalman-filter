@@ -1,5 +1,8 @@
 ## Hand gesture tracking system using ROI method and Adaptive Kalman Filter
 
+[![MATLAB Syntax Check](https://github.com/tomoss/hand-gesture-tracking-roi-kalman-filter/actions/workflows/matlab-ci.yml/badge.svg)](https://github.com/tomoss/hand-gesture-tracking-roi-kalman-filter/actions/workflows/matlab-ci.yml)
+
+
 MATLAB Implementation of:
 
 [Hand gesture tracking system using Adaptive Kalman Filter](https://www.researchgate.net/publication/221230574_Hand_gesture_tracking_system_using_Adaptive_Kalman_Filter)
